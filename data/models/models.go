@@ -7,7 +7,7 @@ import (
 
 type Actor struct {
 	tableName  struct{} `pg:"actor, alias:a"`
-	ActorId    int      `pg:"type:uuid,pk"`
+	Id         int      `pg:",pk"`
 	FirstName  string
 	LastName   string
 	LastUpdate time.Time

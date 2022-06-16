@@ -2,7 +2,7 @@ package examples
 
 import (
 	"github.com/go-pg/pg/v10"
-	"github.com/lukeoleson/go-pg-playground/db/models"
+	"github.com/lukeoleson/go-pg-playground/data/models"
 )
 
 // DONE
