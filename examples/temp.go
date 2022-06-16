@@ -477,3 +477,138 @@ func checkErr(err error) {
 		fmt.Println(err)
 	}
 }
+
+func Update(db *pg.DB) {
+
+	////////////////////
+	//// go-pg can use the values in the struct fed into `Model` as the values for the update.
+	//actor1 := Actor{
+	//	ActorId:   201,
+	//	FirstName: "Rachel", // this value is "Luke" in the database for Actor 202
+	//	LastName:  "Oleson",
+	//}
+	//// As per the documentation, go-pg converts struct field names to lowercase snakecase, so here we tell it to do the update using the value held by actor1.FirstName but go-pg knows it as "first_name".
+	//_, err := db.Model(&actor1).Set("first_name = ?first_name").WherePK().Update()
+	//// Note that the updated at time is the default Go value when we print this struct - this is because the Update query does NOT return the updated values by default.
+	//printActorsOrError(err, []Actor{actor1})
+	//
+	//////////////////
+	//actor2 := Actor{
+	//	ActorId:   202,
+	//	FirstName: "Megan", // this value is "Luke" in the database for Actor 202
+	//	LastName:  "Oleson",
+	//}
+	//// Including a Returning call will return the updated row into our struct
+	//_, err = db.Model(&actor2).Set("first_name = ?first_name").WherePK().Returning("*").Update()
+	//// Now we see the Update At columns DB value.
+	//printActorsOrError(err, []Actor{actor2})
+	//
+	///////////////////
+	//actor3 := Actor{
+	//	ActorId:   201,
+	//	FirstName: "Leif",
+	//	LastName:  "Oleson",
+	//}
+	//
+	//actor4 := Actor{
+	//	ActorId:   202,
+	//	FirstName: "Luke",
+	//	LastName:  "Oleson",
+	//}
+	//// As before, the struct passed into the Update method will receive the returned values while the struct passed into the Model method remains unchanged.
+	//_, err = db.Model(&actor3).Set("first_name = ?first_name").WherePK().Returning("*").Update(&actor4)
+	//// Now we see the Update At columns DB value.
+	//printActorsOrError(err, []Actor{actor3})
+	//printActorsOrError(err, []Actor{actor4})
+
+	//actor5 := Actor{
+	//	FirstName: "prince",
+	//}
+	//actor6 := Actor{
+	//	FirstName: "anna",
+	//}
+	//actors := []Actor{actor5, actor6}
+	//
+	//currentFirstNames := []string{"joe", "luke"}
+	//
+	//_, err := db.Model(&actors).
+	//	Column("first_name").
+	//	Where("a.first_name IN (?)", pg.In(currentFirstNames)).
+	//	Returning("*").
+	//	Update()
+	//
+	//printActorsOrError(err, actors)
+
+}
+
+const ACTOR_NUM_ROWS int = 200
+
+//func TestSelectAllIntoSelect(t *testing.T) {
+//	db := dal.Connect()
+//	defer db.Close()
+//
+//	testCases := []struct {
+//		name string
+//	}{
+//		{
+//			name: "SELECT * FROM Actor",
+//		},
+//	}
+//	var actors []models.Actor
+//	err := db.Model(&models.Actor{}).Select(&actors)
+//	assert.NoError(t, err)
+//	assert.Equal(t, len(actors), ACTOR_NUM_ROWS)
+//}
+//
+//func TestSelectAllIntoModel(t *testing.T) {
+//	db := dal.Connect()
+//	defer db.Close()
+//
+//	var actors []models.Actor
+//	err := db.Model(&actors).Select()
+//	assert.NoError(t, err)
+//	assert.Equal(t, len(actors), ACTOR_NUM_ROWS)
+//}
+//
+//func TestSelectAllError(t *testing.T) {
+//	db := dal.Connect()
+//	defer db.Close()
+//
+//	var actors []models.Actor
+//	err := db.Model(actors).Select()
+//	assert.Error(t, err)
+//}
+
+// DONE
+// Title: SELECT...FROM
+// Task: Find all the rows in the actor table returning all columns.
+// SQL Text: In SQL, to find all the `actors` in the `actor` table we write:
+// SQL Code: SELECT * FROM actor;
+// SQL Result:
+// actor_id | first_name  |  last_name   |      last_update
+// ----------+-------------+--------------+------------------------
+// 1 | PENELOPE    | GUINESS      | 2020-02-15 01:34:33-08
+// 2 | NICK        | WAHLBERG     | 2020-02-15 01:34:33-08
+// 3 | ED          | CHASE        | 2020-02-15 01:34:33-08
+// ...
+// 198 | MARY        | KEITEL       | 2020-02-15 01:34:33-08
+// 199 | JULIA       | FAWCETT      | 2020-02-15 01:34:33-08
+// 200 | THORA       | TEMPLE       | 2020-02-15 01:34:33-08
+//func SelectFrom(db *pg.DB) {
+//
+//	// The `Model` method determines the table in the query's `FROM` clause, while the `Select` method can specify where to store the returned rows.
+//	var actors1 []models.Actor
+//	err := db.Model(&models.Actor{}).Select(&actors1)
+//	models.PrintActorsOrError(err, actors1)
+//
+//	// The receiving variable can alternatively be specified in the `Model` method where it will serve to determine the table in the query's `FROM` clause as well as receive the returned rows.
+//	var actors2 []models.Actor
+//	err = db.Model(&actors2).Select()
+//	models.PrintActorsOrError(err, actors2)
+//
+//	// Providing a variable to both the `Model` and `Select` methods will store the returned rows in the variable passed to `Select` leaving the variable passed into `Model` unchanged.
+//	var actors3 []models.Actor
+//	var actors4 []models.Actor
+//	err = db.Model(&actors3).Select(&actors4)
+//	models.PrintActorsOrError(err, actors3, actors4)
+//}
