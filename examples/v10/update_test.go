@@ -10,14 +10,14 @@ import (
 	"github.com/lukeoleson/go-pg-playground/data/models"
 )
 
-func Test_UpdateMultipleRowsByNonPrimaryKey_Problem(t *testing.T) {
-	db := dal.Connect()
+func TestV10_UpdateMultipleRowsByNonPrimaryKey_Problem(t *testing.T) {
+	db := dal.ConnectV10()
 	defer db.Close()
 
 	////////////////////////////////////////////////
 	// 1. Set the data you want updated into a slice
 
-	testRowIds := []int{3, 4, 136, 179}
+	testRowIds := []int{24, 25, 26, 27}
 	// NOTE: There are 3 eds and 1 jennifer in the test db
 	currentFirstNames := []string{"ED", "JENNIFER"}
 	newFirstNames := []string{"ANNA", "JOE", "PRINCE", "RALF"}
@@ -75,15 +75,15 @@ func Test_UpdateMultipleRowsByNonPrimaryKey_Problem(t *testing.T) {
 	// Correct Approach: Add the primary keys to the `actors` objects and use `WherePK()`.
 }
 
-func Test_UpdateMultipleRowsByNonPrimaryKey_Solution(t *testing.T) {
-	db := dal.Connect()
+func TestV10_UpdateMultipleRowsByNonPrimaryKey_Solution(t *testing.T) {
+	db := dal.ConnectV10()
 	defer db.Close()
 
 	///////////////////////////////////////////////////////////////////
 	// 1. Retrieve the rows you want to update from the DB with the PK
 	// (or get the PK some other way into the slice)
 
-	testRowIds := []int{3, 4, 136, 179}
+	testRowIds := []int{28, 29, 30, 31}
 	var actors []models.Actor
 	err := db.Model(&actors).
 		Column("actor_id").
